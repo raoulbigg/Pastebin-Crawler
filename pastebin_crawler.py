@@ -9,7 +9,6 @@ from optparse import OptionParser
 
 passwords_pat = "(password|pswd|passwd|pwd|admin:admin)"
 mails_pat = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
-cvv_pat = "(cvv|creditcard)"
 leaked_pat = "(hacked|hacking)"
 
 
@@ -83,26 +82,6 @@ def match(r1, soup, timestr):
             f.write(str(soup))
             f.close()
             os.chdir(local)
-
-
-    if soup.findAll(text=re.compile(cvv_pat)) == []:
-        print "No CC's found..."
-    else:
-        print "\033[92mCC's found...\033[0m"
-        if not os.path.exists("CC"):
-            os.makedirs("CC")
-            os.chdir("CC")
-            f = open("CC"+timestr+".txt", "a")
-            f.write(str(soup))
-            f.close()
-            os.chdir(local)
-        else:
-            os.chdir("CC")
-            f = open("CC"+timestr+".txt", "a")
-            f.write(str(soup))
-            f.close()
-            os.chdir(local)
-
 
     if soup.findAll(text=re.compile(mails_pat)) == []:
         print "No mails found..."
